@@ -1,42 +1,51 @@
-class Cloth:
+from abc import ABC, abstractmethod
 
-    def __init__(self):
+class Cloth(ABC):
+    expense_count = 0
+
+
+    @abstractmethod
+    def expense(self):
         pass
-
-    def __str__(self):
-        return f'You need {self.fabric_amount:.2f} metres of fabric to make the {self.__class__.__name__} '
-
-    def __add__(self, other):
-        return f'To make the {self.__class__.__name__} and {other.__class__.__name__}' \
-               f' You need {(self.fabric_amount + other.fabric_amount):.2f} metres of fabric'
-
-    def fabric_amount(self):
-        raise NotImplementedError(self.__class__.__name__)
 
 
 class Coat(Cloth):
 
     def __init__(self, v):
-        super().__init__()
-        self._v = float(v)
+        self.v = v
+        Coat.expense_count += self.expense
+
+
+    def __str__(self):
+        return f'Для пальто размером {self.v} требуется ткань в кол-ве {self.expense}, общий расход = {Coat.expense_count:.02f}'
+
 
     @property
-    def fabric_amount(self):
-        return self._v / 6.5 + 0.5
+    def expense(self):
+        return float(self.v / 6.5 + 0.5)
 
 
 class Suit(Cloth):
     def __init__(self, h):
-        super().__init__()
-        self._h = float(h)
+        self.h = h
+        Suit.expense_count += self.expense
+
+
+    def __str__(self):
+        return f'Для костюма размером {self.h} требуется ткань в кол-ве {self.expense}, общий расход = {Suit.expense_count:.02f}'
+
 
     @property
-    def fabric_amount(self):
-        return 2 * self._h + 0.3
+    def expense(self):
+        return float(2 * self.h + 0.3)
 
 
 coat = Coat(48)
 suit = Suit(1.8)
 print(coat)
 print(suit)
-print(coat + suit)
+coat2 = Coat(56)
+suit2 = Suit(1.6)
+print(coat2)
+print(suit2)
+

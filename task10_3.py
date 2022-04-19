@@ -7,19 +7,19 @@ class Cell:
         return f'Количество клеток = {self.amount}'
 
     def __add__(self, other): # сложение клеток
-        return f'Количество клеток после СЛОЖЕНИЯ = {self.amount + other.amount}'
+        return f'Количество клеток после СЛОЖЕНИЯ = {Cell(self.amount + other.amount)}'
 
     def __sub__(self, other):  # вычитание
         if self.amount < other.amount:
-            return f'Вычитание невозможно, уменьшаемое меньше вычитаемого'
+            raise ValueError('Вычитание невозможно, уменьшаемое меньше вычитаемого')
         else:
-            return f'Результат вычитания  = {self.amount - other.amount} ячеек'
+            return f'Результат вычитания  = {Cell(self.amount - other.amount)} ячеек'
 
     def __mul__(self, other): # умножение
-        return f'Результат УМНОЖЕНИЯ = {self.amount * other.amount} ячеек'
+        return f'Результат УМНОЖЕНИЯ = {Cell(self.amount * other.amount)} ячеек'
 
     def __floordiv__(self, other):
-        return f'Создана общая клетка из 2 путем деления, количество ячеек = {self.amount // other.amount}'
+        return f'Создана общая клетка из 2 путем деления, количество ячеек = {Cell(self.amount // other.amount)}'
 
     def make_order(self, row_amount):
         res = ''
